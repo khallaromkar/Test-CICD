@@ -42,7 +42,7 @@ jobs:
           sleep 5
 
       - name: Run Bruno Tests
-        run: bru run tests --env environments/ci.json
+        run: bru run tests --env Auth
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
