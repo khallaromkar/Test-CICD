@@ -19,8 +19,6 @@ tests {
   test("Signin must return 200 and save token", () => {
     expect(res.status).to.equal(200);
 
-    console.log(res);
-
     const cookieHeader = res.headers["set-cookie"];
     expect(cookieHeader).to.not.be.undefined;
 
@@ -32,7 +30,7 @@ tests {
     bru.setEnvVar("TOKEN", token);
 
     console.log("Stored Token:", token);
-    
+
     const userId = res.body._id;
     expect(userId).to.not.be.undefined;
 
