@@ -1,0 +1,27 @@
+meta {
+    name: "delete-user"
+    type: http
+}
+
+delete {
+    url: {{BASE_URL}}/user/{{USER_ID}}
+    auth: bearer
+    body:none
+}
+
+params:path {
+    id: {{USER_ID}}
+}
+
+auth:bearer {
+    token: {{TOKEN}}
+}
+
+tests {
+    test("User must be deleted successfully", () => {
+
+        expect(res.status).to.be.oneOf([200, 204]);
+
+        console.log("User deleted successfully");
+    });
+}
