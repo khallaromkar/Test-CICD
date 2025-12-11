@@ -37,6 +37,9 @@ jobs:
           EOF
 
       - name: Start API server
+        env:
+          MONGO: ${{ secrets.MONGO }}
+          JWT: ${{ secrets.JWT }}
         run: |
           node app.js &
           sleep 5
