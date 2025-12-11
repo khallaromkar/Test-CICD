@@ -1,0 +1,14 @@
+meta {
+  name: "health-check"
+  type: http
+}
+
+get {
+  url: {{BASE_URL}}/health
+}
+
+tests {
+  test("should return HTTP 200 for health check", () => {
+    expect(res.status).to.equal(200);
+  });
+}

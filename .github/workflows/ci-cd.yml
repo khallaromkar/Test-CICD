@@ -5,10 +5,8 @@ on:
     branches: ["master"]
   pull_request:
 
-
 jobs:
   build-test:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +21,28 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Bruno CLI
+        run: npm install -g @usebruno/cli
 
-      
+      - name: Create Bruno environment file
+        run: |
+          mkdir -p environments
+          cat <<EOF > environments/ci.json
+          vars{
+            BASE_URL: http://localhost:5000
+            USER_NAME: ${{ secrets.CI_USER_NAME }}
+            USER_EMAIL: ${{ secrets.CI_USER_EMAIL }}
+            USER_PASSWORD: ${{ secrets.CI_USER_PASSWORD }}
+          }
+          EOF
+
+      - name: Start API server
+        run: |
+          node app.js &
+          sleep 5
+
+      - name: Run Bruno Tests
+        run: bru run tests --env environments/ci.json
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -40,4 +58,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-cicd
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-cicd:latest

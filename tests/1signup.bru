@@ -1,0 +1,29 @@
+meta {
+  name: signup
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/auth/signup/
+  body: json
+}
+
+body:json {
+  {
+    "username":"{{USER_NAME}}",
+    "email":"{{USER_EMAIL}}",
+    "password":"{{USER_PASSWORD}}"
+  }
+}
+
+tests {
+  test("should return HTTP 200 for health check", () => {
+    expect(res.status).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

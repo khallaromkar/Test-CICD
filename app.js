@@ -31,11 +31,15 @@ import collectionRoute from "./routes/collection.js";
 import sliderRoute from "./routes/slider.js";
 
 // Routes
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok" });
+});
 app.use("/auth",authRoute);
 app.use("/user",userRoute);
 app.use("/nft",nftRoute);
 app.use("/collection",collectionRoute);
 app.use("/slider",sliderRoute);
+
 
 app.listen(PORT,()=>{
     console.log("Server is running at port no 5000");

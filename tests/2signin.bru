@@ -1,0 +1,42 @@
+meta {
+  name: signin
+  type: http
+}
+
+post {
+  url: {{BASE_URL}}/auth/signin
+  body: json
+}
+
+body:json {
+  {
+    "username": "{{USER_NAME}}",
+    "password": "{{USER_PASSWORD}}"
+  }
+}
+
+tests {
+  test("Signin must return 200 and save token", () => {
+    expect(res.status).to.equal(200);
+
+    console.log(res);
+
+    const cookieHeader = res.headers["set-cookie"];
+    expect(cookieHeader).to.not.be.undefined;
+
+    const raw = cookieHeader[0];
+    const token = raw.split(";")[0].split("=")[1];
+
+    expect(token).to.not.be.undefined;
+
+    bru.setEnvVar("TOKEN", token);
+
+    console.log("Stored Token:", token);
+    
+    const userId = res.body._id;
+    expect(userId).to.not.be.undefined;
+
+    bru.setEnvVar("USER_ID", userId);
+    console.log("Stored USER_ID:", userId);
+  });
+}

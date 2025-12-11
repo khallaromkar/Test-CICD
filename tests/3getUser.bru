@@ -1,0 +1,29 @@
+meta {
+  name: "get-user"
+  type: http
+}
+
+get {
+  url: {{BASE_URL}}/user/find/{{USER_ID}}
+  auth: bearer
+  body:none
+}
+
+params:path {
+  id: {{USER_ID}}
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+tests {
+  test("should fetch user details successfully", () => {
+    expect(res.status).to.equal(200);
+    console.log("GET USER RESPONSE:", res.body);
+
+    // Assert some expected fields
+    expect(res.body).to.have.property("username");
+    expect(res.body).to.have.property("email");
+  });
+}

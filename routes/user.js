@@ -7,16 +7,16 @@ const router = express.Router();
 // update user
 router.put("/:id",verifyToken,update)
 
-// update user
+// delete user
 router.delete("/:id",verifyToken,deleteUser)
 
-// update user
+// get user
 router.get("/find/:id",verifyToken,getUser)
 
-// update user
+// like user
 router.put("/like/:id",verifyToken,likeNft)
 
-// update user
+// dislike user
 router.put("/unlike/:id",verifyToken,unLikeNft)
 
 
